@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pedido-form',
@@ -17,7 +18,10 @@ export class PedidoFormComponent implements OnInit {
   FormRegistro !: FormGroup;
   submitted = false;
 
-  constructor(private formBuilder: FormBuilder) { }
+
+  currentDate: any = new Date();
+
+  constructor(private formBuilder: FormBuilder , private router: Router) { }
 
   ngOnInit(): void {
     this.FormRegistro = this.formBuilder.group({
@@ -43,6 +47,7 @@ export class PedidoFormComponent implements OnInit {
       codigo: ['',
                     [Validators.required,
                     Validators.pattern('[0-9]{3,4}')]],
+      fechaDelivery: ['',Validators.required,],
 
     })
   }
@@ -52,6 +57,12 @@ export class PedidoFormComponent implements OnInit {
 
     if(this.FormRegistro.invalid){
       return
+    }
+  }
+
+  enviarFormulario() {
+    if (this.FormRegistro.valid) {
+      this.router.navigate(['/pedidoRealizado']);
     }
   }
 

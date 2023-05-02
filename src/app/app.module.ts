@@ -7,6 +7,8 @@ import { PedidoFormComponent } from './pedido-form/pedido-form.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { CarritoComprasComponent } from './carrito-compras/carrito-compras.component';
+import { DisableIfDirective } from './disable-if.directive';
+import { PedidoRealizadoComponent } from './pedido-realizado/pedido-realizado.component';
 
 @NgModule({
   declarations: [
@@ -14,13 +16,15 @@ import { CarritoComprasComponent } from './carrito-compras/carrito-compras.compo
     PedidoFormComponent,
     HeaderComponent,
     FooterComponent,
-    CarritoComprasComponent
+    CarritoComprasComponent,
+    PedidoRealizadoComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    DisableIfDirective
   ],
   providers: [],
   bootstrap: [AppComponent]

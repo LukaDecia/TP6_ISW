@@ -4,6 +4,8 @@
 
       <!-- Momento Recibir Pedido -->
 
+      <!-- RadioButton Recibir Pedido -->
+
       <div class="card card-body">
             <p class="fs-3">Cuando quiere recibir el pedido <span class="text-danger">*</span>:</p>
 
@@ -17,12 +19,29 @@
               <label class="form-check-label fs-4" for="opcionRecibirPedido">Programar recepción</label>
             </div>
 
+            <!-- Programar Recepcion -->
+
             <div *ngIf="showProgramacion">
+
+                <!-- Fecha de Delivery -->
 
                 <div class="mb-2">
                   <label class="form-label fs-4">Fecha de Delivery <span class="text-danger">*</span></label>
-                  <input type="date" name="" id="" class="form-control">
+                  <input
+                    type="date"
+                    class="form-control"
+                    min="{{currentDate | date:'yyyy-MM-dd'}}"
+                    formControlName="fechaDelivery"
+                    [ngClass]="{'is-invalid': (FormRegistro.controls['fechaDelivery'].touched || submitted) && FormRegistro.controls['fechaDelivery'].errors}"
+                    >
+
+                  <div *ngIf="(FormRegistro.controls['fechaDelivery'].touched || submitted) && FormRegistro.get('fechaDelivery')?.hasError('required')" class="text-danger fs-5">
+                    Dato Requerido.
+                  </div>
+
                 </div>
+
+                <!-- Hora de Delivery -->
 
                 <div>
                   <label class="form-label fs-4">Hora de Delivery <span class="text-danger">*</span></label>
@@ -99,7 +118,7 @@
         <p class="fs-3">Seleccionar Forma de Pago <span class="text-danger">*</span>:</p>
 
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="opcionRecibirPedido" id=""  (change)="showPagoEfectivo=true" (change)="showPagoTarjeta=false">
+          <input class="form-check-input" type="radio" name="opcionFormaPago" id=""  (change)="showPagoEfectivo=true" (change)="showPagoTarjeta=false">
           <label class="form-check-label fs-4" for="opcionRecibirPedido">Efectivo</label>
         </div>
 
@@ -119,7 +138,7 @@
         <!-- Pago con Tarjeta -->
 
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="opcionRecibirPedido" id="" (change)="showPagoEfectivo=false" (change)="showPagoTarjeta=true">
+          <input class="form-check-input" type="radio" name="opcionFormaPago" id="" (change)="showPagoEfectivo=false" (change)="showPagoTarjeta=true">
           <label class="form-check-label fs-4" for="opcionRecibirPedido">Tarjeta de Débito / Crédito</label>
         </div>
 
@@ -191,12 +210,14 @@
         </div>
       </div>
 
+      <!-- Botones -->
+
       <div class="btn-container">
         <div class="d-flex justify-content-center">
           <a href="/carrito" class="btn-volver">Volver</a>
         </div>
 
-        <button class="d-flex justify-content-center form-group button-border">
+        <button class="d-flex justify-content-center form-group button-border" [disabled]="!FormRegistro.valid" (click)="enviarFormulario()">
           <a  class="btn-ordenar">Confirmar</a>
         </button>
 
