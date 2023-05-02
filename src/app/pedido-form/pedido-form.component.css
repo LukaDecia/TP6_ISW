@@ -1,0 +1,49 @@
+
+.container-pedido{
+  padding: var(--spacing-36)
+}
+
+.btn-volver{
+  padding: var(--spacing-8);
+  background-color: var(--dark-bg-solid);
+  border-radius: 20px;
+  text-decoration: none;
+  color: var(--light-bg-solid);
+  font-family: var(--alternative-font);
+  font-weight: bold;
+  text-align: center;
+  width: 200px;
+}
+
+.btn-ordenar{
+  padding: var(--spacing-8);
+  background-color: var(--secondary-solid);
+  border-radius: 20px;
+  text-decoration: none;
+  color: var(--light-bg-solid);
+  font-family: var(--alternative-font);
+  font-weight: bold;
+  text-align: center;
+  width: 200px;
+}
+
+.btn-container{
+  display: flex;
+  gap: 100px;
+  justify-content: center;
+  margin-top: var(--spacing-12);
+  margin-bottom: var(--spacing-36);
+}
+
+.button-border{
+  border: none;
+}
+
+.vencimiento-container{
+  display: flex;
+  gap: 20px;
+}
+
+.vencimiento-input{
+  width: 100px;
+}

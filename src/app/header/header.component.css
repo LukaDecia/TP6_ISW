@@ -1,0 +1,20 @@
+.header{
+  color: var(--light-bg-solid);
+  background-color: var(--primary-solid);
+  text-align: center;
+  padding: var(--spacing-36);
+  font-family: var(--alternative-font);
+  font-size: var(--font-jumbo);
+  font-weight: 500;
+}
+
+.user-title{
+  font-family: var(base-font);
+  font-weight: 400;
+  font-size: var(--font-large);
+  color: var(--dark-solid);
+  padding-top: var(--spacing-20);
+  padding-bottom:  var(--spacing-8);
+  border-bottom: 5px solid var(--primary-solid);
+  margin-bottom: var(--spacing-36);
+}

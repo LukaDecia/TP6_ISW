@@ -1,1 +1,102 @@
-/* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700;900&family=Raleway:wght@100;300;400;500;600;700;900&display=swap');
+
+/* NORMALIZACIÓN DEL SITIO*/
+
+:root {
+    /* Palette */
+    --primary-solid:#D90429;
+    --primary-900: rgba(217, 4, 41, .9);;
+    --primary-500: rgba(217, 4, 41, .5);;
+    --primary-300: rgba(217, 4, 41, .3);;
+
+    --secondary-solid: #EF233C;
+    --secondary-900: rgba(239, 35, 60, .9);
+    --secondary-500: rgba(239, 35, 60, .5);
+    --secondary-300: rgba(239, 35, 60, .3);
+
+    --gray-solid: #8D99AE;
+    --gray-900: rgba(141, 153, 174, .9);
+    --gray-500: rgba(141, 153, 174, .5);
+    --gray-300: rgba(141, 153, 174, .3);
+
+    --dark-solid: #1f1f1f;
+    --dark-900: rgb(31, 31, 31, .9);
+    --dark-500: rgb(31, 31, 31, .5);
+    --dark-300: rgb(31, 31, 31, .3);
+
+    --dark-bg-solid: #2B2D42;
+    --light-bg-solid: #EDF2F4;
+
+    --light-font-solid: #FFFFFF;
+
+
+    /* Typography */
+    --base-font: 'Inter', sans-serif;
+    --alternative-font: 'Raleway', sans-serif;
+
+    /* Fonts Sizes */
+    --font-jumbo: 4.8em;
+    --font-large: 3em;
+    --font-medium: 1.8em;
+    --font-small: 1.4em;
+
+    /* Spacings */
+    --spacing-128: 12.8rem;
+    --spacing-68: 6.8rem;
+    --spacing-36: 3.6rem;
+    --spacing-28: 2.8rem;
+    --spacing-24: 2.4rem;
+    --spacing-20: 2rem;
+    --spacing-16: 1.6rem;
+    --spacing-12: 1.2rem;
+    --spacing-8: .8rem;
+}
+
+*,
+* ::before,
+* ::after {
+    margin: 0;
+    padding: 0;
+    /* Va a determinar como se comportan los margin - padding y content
+        border-box se adapta el content de una caja a los cambios en un espacion determinado
+        border-content se modifica todo menos el content */
+    box-sizing: border-box;
+}
+
+html {
+    font-family: var(--base-font);
+    font-size: 62.5%; /* Esto me hace que un em = 10px */
+    color: var(--dark-solid);
+    background-color: var(--light-bg-solid);
+}
+
+a {
+    text-decoration: none;
+    font-family: inherit;
+    color: inherit;
+    /* Va a tomar el color que hereda*/
+}
+
+header,
+footer {
+    font-family: var(--alternative-font);
+    color: var(--light-font-solid);
+}
+
+ul, ol {
+    list-style-type: none;
+}
+
+p {
+    font-size: var(--font-medium);
+}
+
+img {
+    width: 100%;
+}
+
+.cointainer{
+    max-width: 1200px;
+    margin: 0 auto;
+}

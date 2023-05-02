@@ -1,0 +1,212 @@
+<div class="container container-pedido">
+  <div class="container-fluid">
+    <form name="FormRegistro" [formGroup]="FormRegistro" (ngSubmit)="onSubmit()">
+
+      <!-- Momento Recibir Pedido -->
+
+      <div class="card card-body">
+            <p class="fs-3">Cuando quiere recibir el pedido <span class="text-danger">*</span>:</p>
+
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="opcionRecibirPedido" id="" checked (change)="showProgramacion=false">
+              <label class="form-check-label fs-4" for="opcionRecibirPedido">Lo antes posible</label>
+            </div>
+
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="opcionRecibirPedido" id="" (change)="showProgramacion=true">
+              <label class="form-check-label fs-4" for="opcionRecibirPedido">Programar recepción</label>
+            </div>
+
+            <div *ngIf="showProgramacion">
+
+                <div class="mb-2">
+                  <label class="form-label fs-4">Fecha de Delivery <span class="text-danger">*</span></label>
+                  <input type="date" name="" id="" class="form-control">
+                </div>
+
+                <div>
+                  <label class="form-label fs-4">Hora de Delivery <span class="text-danger">*</span></label>
+                  <select name="" id="" class="form-select">
+                    <option value="" *ngFor="let hora of horarios">{{hora}}</option>
+                  </select>
+                </div>
+
+            </div>
+      </div>
+
+      <!-- Dirección Delivery -->
+
+      <div class="card card-body">
+
+        <p class="fs-3">Dirección Delivery <span class="text-danger">*</span>:</p>
+
+        <!-- Campo Calle -->
+
+        <div class="form-group">
+          <label class="form-label fs-4">Calle<span class="text-danger">*</span></label>
+          <input class="form-control" [ngClass]="{'is-invalid': (FormRegistro.controls['calle'].touched || submitted) && FormRegistro.controls['calle'].errors}" type="text" formControlName="calle">
+
+          <div *ngIf="(FormRegistro.controls['calle'].touched || submitted) && FormRegistro.get('calle')?.hasError('required')" class="text-danger fs-5">
+            Dato Requerido.
+          </div>
+
+          <div *ngIf="(FormRegistro.controls['calle'].touched || submitted) && (FormRegistro.get('calle')?.hasError('minlength') || FormRegistro.get('calle')?.hasError('maxlength'))" class="text-danger fs-5">
+            Dato texto, 4 a 50 caracteres.
+          </div>
+        </div>
+
+        <!-- Campo Número Calle -->
+
+        <div>
+          <label class="form-label fs-4">Número <span class="text-danger">*</span></label>
+          <input class="form-control" type="text" formControlName="nroCalle" [ngClass]="{'is-invalid': (FormRegistro.controls['nroCalle'].touched || submitted) && FormRegistro.controls['nroCalle'].errors}">
+
+          <div *ngIf="(FormRegistro.controls['nroCalle'].touched || submitted) && FormRegistro.get('nroCalle')?.hasError('required')" class="text-danger fs-5">
+            Dato Requerido.
+          </div>
+
+          <div *ngIf="(FormRegistro.controls['nroCalle'].touched || submitted) && FormRegistro.get('nroCalle')?.hasError('pattern')" class="text-danger fs-5">
+            Dato numérico, 1 a 5 dígitos.
+          </div>
+
+        </div>
+
+        <!-- Campo Ciudad -->
+
+        <div>
+          <label class="form-label fs-4">Ciudad <span class="text-danger">*</span></label>
+          <select name="" id="" class="form-select">
+            <option value="" *ngFor="let ciudad of ciudades">{{ciudad}}</option>
+          </select>
+
+        </div>
+
+
+        <!-- Campo Referencias -->
+
+        <div>
+          <label class="form-label fs-4">Referencias</label>
+          <textarea class="form-control" name="" id="" cols="4" rows="4"></textarea>
+        </div>
+
+      </div>
+
+      <!-- Forma de Pago -->
+
+      <!-- Pago en Efectivo -->
+
+      <div class="card card-body">
+        <p class="fs-3">Seleccionar Forma de Pago <span class="text-danger">*</span>:</p>
+
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="opcionRecibirPedido" id=""  (change)="showPagoEfectivo=true" (change)="showPagoTarjeta=false">
+          <label class="form-check-label fs-4" for="opcionRecibirPedido">Efectivo</label>
+        </div>
+
+        <div *ngIf="showPagoEfectivo">
+          <label class="form-label fs-4">Monto con el que va a pagar <span class="text-danger">*</span></label>
+          <input class="form-control" type="text" formControlName="efectivo" [ngClass]="{'is-invalid': (FormRegistro.controls['efectivo'].touched || submitted) && FormRegistro.controls['efectivo'].errors}">
+
+          <div *ngIf="(FormRegistro.controls['efectivo'].touched || submitted) && FormRegistro.get('efectivo')?.hasError('required')" class="text-danger fs-5">
+            Dato Requerido.
+          </div>
+
+          <div *ngIf="(FormRegistro.controls['efectivo'].touched || submitted) && FormRegistro.get('efectivo')?.hasError('pattern')" class="text-danger fs-5">
+            Dato Numérico.
+          </div>
+        </div>
+
+        <!-- Pago con Tarjeta -->
+
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="opcionRecibirPedido" id="" (change)="showPagoEfectivo=false" (change)="showPagoTarjeta=true">
+          <label class="form-check-label fs-4" for="opcionRecibirPedido">Tarjeta de Débito / Crédito</label>
+        </div>
+
+        <div *ngIf="showPagoTarjeta">
+
+          <!-- Número Tarjeta -->
+
+          <div>
+            <label class="form-label fs-4">Número <span class="text-danger">*</span></label>
+            <input class="form-control" type="text" formControlName="nroTarjeta" [ngClass]="{'is-invalid': (FormRegistro.controls['nroTarjeta'].touched || submitted) && FormRegistro.controls['nroTarjeta'].errors}">
+
+            <div *ngIf="(FormRegistro.controls['nroTarjeta'].touched || submitted) && FormRegistro.get('nroTarjeta')?.hasError('required')" class="text-danger fs-5">
+              Dato Requerido.
+            </div>
+
+            <div *ngIf="(FormRegistro.controls['nroTarjeta'].touched || submitted) && FormRegistro.get('nroTarjeta')?.hasError('pattern')" class="text-danger fs-5">
+              Dato Numérico de 16 dígitos.
+            </div>
+          </div>
+
+          <!-- Nombre y Apellido Tarjeta -->
+
+          <div>
+            <label class="form-label fs-4">Nombre y Apellido <span class="text-danger">*</span></label>
+            <input class="form-control" type="text" formControlName="nombreTarjeta" [ngClass]="{'is-invalid': (FormRegistro.controls['nombreTarjeta'].touched || submitted) && FormRegistro.controls['nombreTarjeta'].errors}">
+
+            <div *ngIf="(FormRegistro.controls['nombreTarjeta'].touched || submitted) && FormRegistro.get('nombreTarjeta')?.hasError('required')" class="text-danger fs-5">
+              Dato Requerido.
+            </div>
+
+            <div *ngIf="(FormRegistro.controls['nombreTarjeta'].touched || submitted) && FormRegistro.get('nombreTarjeta')?.hasError('pattern')" class="text-danger fs-5">
+              Dato texto, 4 a 50 caracteres.
+            </div>
+          </div>
+
+          <!-- Vencimiento Tarjeta -->
+
+          <div>
+            <label class="form-label fs-4">Vencimiento <span class="text-danger">*</span></label>
+
+            <input class="form-control vencimiento-input" type="text" formControlName="vencimiento" [ngClass]="{'is-invalid': (FormRegistro.controls['vencimiento'].touched || submitted) && FormRegistro.controls['vencimiento'].errors}" placeholder="ej: 05/25">
+
+            <div *ngIf="(FormRegistro.controls['vencimiento'].touched || submitted) && FormRegistro.get('vencimiento')?.hasError('required')" class="text-danger fs-5">
+              Ingrese Vencimiento Tarjeta.
+            </div>
+
+            <div *ngIf="(FormRegistro.controls['vencimiento'].touched || submitted) && FormRegistro.get('vencimiento')?.hasError('pattern')" class="text-danger fs-5">
+              Ingrese Fecha Sin Vencer en Formato 'MM/AA' (M = mes y A = año).
+            </div>
+
+          </div>
+
+          <!-- Código Tarjeta -->
+
+          <div>
+            <label class="form-label fs-4">CVC <span class="text-danger">*</span></label>
+            <input class="form-control" type="text" formControlName="codigo" [ngClass]="{'is-invalid': (FormRegistro.controls['codigo'].touched || submitted) && FormRegistro.controls['codigo'].errors}">
+
+            <div *ngIf="(FormRegistro.controls['codigo'].touched || submitted) && FormRegistro.get('codigo')?.hasError('required')" class="text-danger fs-5">
+              Dato Requerido.
+            </div>
+
+            <div *ngIf="(FormRegistro.controls['codigo'].touched || submitted) && FormRegistro.get('codigo')?.hasError('pattern')" class="text-danger fs-5">
+              Dato numérico, 3 o 4 caracteres.
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <div class="btn-container">
+        <div class="d-flex justify-content-center">
+          <a href="/carrito" class="btn-volver">Volver</a>
+        </div>
+
+        <button class="d-flex justify-content-center form-group button-border">
+          <a  class="btn-ordenar">Confirmar</a>
+        </button>
+
+      </div>
+
+    </form>
+  </div>
+</div>
+
+
+
+
+

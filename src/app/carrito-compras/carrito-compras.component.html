@@ -1,0 +1,42 @@
+  <!-- Carrito de Compras -->
+
+  <div class="container-fluid col-6 container-carrito" >
+    <div class="card card-body">
+      <p class="d-flex justify-content-center title-carrito">Carrito de Compras</p>
+
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Producto</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let detalle of arrayCarrito">
+            <td>{{detalle.nombre}}</td>
+            <td>{{detalle.cantidad}}</td>
+            <td>{{detalle.precio}}</td>
+            <th>
+              <div class="btn-container">
+                <button type="button" class="btn btn-secondary">-</button>
+              </div>
+            </th>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th>Total</th>
+            <th></th>
+            <th>{{totalCarrito}}</th>
+          </tr>
+        </tfoot>
+      </table>
+
+
+      <div class="d-flex justify-content-center">
+        <a href="/pedido" class="btn-ordenar">Ordenar Pedido</a>
+      </div>
+
+    </div>
+  </div>
