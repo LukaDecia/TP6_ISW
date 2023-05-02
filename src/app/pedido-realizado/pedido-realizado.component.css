@@ -1,0 +1,18 @@
+
+.container-pedido{
+  padding: 135px;
+}
+
+.title{
+  font-family: var(--base-font);
+  font-size: var(--font-jumbo);
+  font-weight: 500;
+  color: var(--dark-bg-solid);
+}
+
+.subtitle{
+  font-family: var(--alternative-font);
+  font-size: var(--font-medium);
+  font-weight: bold;
+  color: var(--secondary-solid);
+}
