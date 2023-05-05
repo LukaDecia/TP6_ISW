@@ -79,7 +79,7 @@ export class PedidoFormComponent implements OnInit {
         Validators.pattern('^4[0-9]{15}$')]],
       nombreTarjeta: ['',
               [Validators.required,
-              Validators.pattern('[a-zA-Z]{1,100}')]],
+              Validators.pattern('[a-zA-Z ]{1,100}')]],
       codigo: ['',
               [Validators.required,
               Validators.pattern('[0-9]{3}')]],
