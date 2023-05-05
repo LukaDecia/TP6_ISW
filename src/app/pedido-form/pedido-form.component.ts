@@ -90,7 +90,7 @@ export class PedidoFormComponent implements OnInit {
   }
 
     confirmarBtnStatus() : boolean{
-      if ((!this.showProgramacion || (this.showProgramacion && this.FormFecha.valid)) && this.FormDireccion.valid && ((this.showPagoEfectivo && this.validarEfectivo()) || (this.showPagoTarjeta && this.FormTarjeta.valid && this.obtenertodo()))){
+      if ((!this.showProgramacion || (this.showProgramacion && this.FormFecha.valid)) && this.FormDireccion.valid && ((this.showPagoEfectivo && this.validarEfectivo()) || (this.showPagoTarjeta && this.FormTarjeta.valid && !this.obtenertodo()))){
         return true
       }
       return false
