@@ -83,6 +83,8 @@ export class PedidoFormComponent implements OnInit {
       codigo: ['',
               [Validators.required,
               Validators.pattern('[0-9]{3}')]],
+      vencimiento: [null,
+                [Validators.required]]
     })
 
   }

@@ -126,20 +126,20 @@
 
         <!-- Monto en Efectivo -->
 
-        <form name="efectivo" [formGroup]="FormEfectivo">
+        <form name="FormEfectivo" [formGroup]="FormEfectivo">
           <div *ngIf="showPagoEfectivo">
               <label class="form-label fs-4">Monto con el que va a pagar <span class="text-danger">*</span></label>
-              <input class="form-control" type="number" (change)="validarEfectivo()" id="montoEfectivo" placeholder="ej: 1500">
+              <input class="form-control" type="number" (change)="validarEfectivo()" id="montoEfectivo" placeholder="ej: 8900" formControlName="efectivo" [ngClass]="{'is-invalid': (FormEfectivo.controls['efectivo'].touched || submitted) && FormEfectivo.controls['efectivo'].errors}">
 
-              <div *ngIf="!validarEfectivo()" class="text-danger fs-5">
-                Dato Requerido (monto minimo de 8900).
+              <div *ngIf="(FormEfectivo.controls['efectivo'].touched || submitted) && !validarEfectivo()" class="text-danger fs-5">
+                Dato Requerido. Monto Inferior al Total del Carrito.
               </div>
           </div>
         </form>
 
         <!-- Radio button Pago con Tarjeta -->
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="opcionFormaPago" id="" (change)="showPagoEfectivo=false" (change)="showPagoTarjeta=true">
+            <input class="form-check-input"type="radio" name="opcionFormaPago" id="" (change)="showPagoEfectivo=false" (change)="showPagoTarjeta=true">
             <label class="form-check-label fs-4" for="opcionRecibirPedido">Tarjeta de Débito / Crédito</label>
           </div>
 
@@ -189,9 +189,14 @@
                 placeholder="ej: 10/2024"
                 id="mesFecha"
                 class="form-control"
+                formControlName="vencimiento" [ngClass]="{'is-invalid': (FormTarjeta.controls['vencimiento'].touched || submitted) && FormTarjeta.controls['vencimiento'].errors}"
                 >
 
-                <div *ngIf="showErrorVencimiento" class="text-danger fs-5">
+                <div *ngIf="(FormTarjeta.controls['vencimiento'].touched || submitted) && FormTarjeta.get('vencimiento')?.hasError('required')" class="text-danger fs-5">
+                  Dato Requerido.
+                </div>
+
+                <div *ngIf="(FormTarjeta.controls['vencimiento'].touched || submitted) && showErrorVencimiento" class="text-danger fs-5">
                   Ingrese Fecha Sin Vencer en Formato 'MM/AAAA' (M = mes y A = año).
                 </div>
 
