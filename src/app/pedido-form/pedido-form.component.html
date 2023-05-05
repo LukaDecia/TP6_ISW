@@ -69,21 +69,21 @@
             </div>
 
             <div *ngIf="(FormDireccion.controls['calle'].touched || submitted) && (FormDireccion.get('calle')?.hasError('minlength') || FormDireccion.get('calle')?.hasError('maxlength'))" class="text-danger fs-5">
-              Dato texto, 4 a 50 caracteres.
+              Dato texto, máximo 100 caracteres.
             </div>
           </div>
         <!-- Campo Número Calle -->
 
         <div>
           <label class="form-label fs-4">Número <span class="text-danger">*</span></label>
-          <input class="form-control" type="text" formControlName="nroCalle" [ngClass]="{'is-invalid': (FormDireccion.controls['nroCalle'].touched || submitted) && FormDireccion.controls['nroCalle'].errors}" placeholder="ej: 1234">
+          <input class="form-control" type="text" formControlName="nroCalle" [ngClass]="{'is-invalid': (FormDireccion.controls['nroCalle'].touched || submitted) && FormDireccion.controls['nroCalle'].errors}" placeholder="ej: 12345">
 
           <div *ngIf="(FormDireccion.controls['nroCalle'].touched || submitted) && FormDireccion.get('nroCalle')?.hasError('required')" class="text-danger fs-5">
             Dato Requerido.
           </div>
 
           <div *ngIf="(FormDireccion.controls['nroCalle'].touched || submitted) && FormDireccion.get('nroCalle')?.hasError('pattern')" class="text-danger fs-5">
-            Dato numérico, 1 a 5 dígitos.
+            Dato numérico, máximo 5 dígitos.
           </div>
 
         </div>
@@ -103,7 +103,11 @@
 
         <div>
           <label class="form-label fs-4">Referencias</label>
-          <textarea class="form-control" name="" id="" cols="4" rows="4" placeholder="Ingrese alguna referencia sobre su pedido"></textarea>
+          <textarea class="form-control" name="" id="" cols="4" rows="4" placeholder="Ingrese alguna referencia sobre su pedido" formControlName="referencia" [ngClass]="{'is-invalid': (FormDireccion.controls['referencia'].touched || submitted) && FormDireccion.controls['referencia'].errors}"></textarea>
+
+          <div *ngIf="(FormDireccion.controls['referencia'].touched || submitted) && (FormDireccion.get('referencia')?.hasError('minlength') || FormDireccion.get('referencia')?.hasError('maxlength'))" class="text-danger fs-5">
+            Dato texto, máximo 100 caracteres.
+          </div>
         </div>
       </form>
       </div>
@@ -122,20 +126,16 @@
 
         <!-- Monto en Efectivo -->
 
-        <div *ngIf="showPagoEfectivo">
-          <form name="formularioEfectivo" [formGroup]="FormEfectivo">
-            <label class="form-label fs-4">Monto con el que va a pagar <span class="text-danger">*</span></label>
-            <input class="form-control" type="text" formControlName="efectivo" [ngClass]="{'is-invalid': (FormEfectivo.controls['efectivo'].touched || submitted) && FormEfectivo.controls['efectivo'].errors}" placeholder="ej: 1500">
+        <form name="efectivo" [formGroup]="FormEfectivo">
+          <div *ngIf="showPagoEfectivo">
+              <label class="form-label fs-4">Monto con el que va a pagar <span class="text-danger">*</span></label>
+              <input class="form-control" type="number" (change)="validarEfectivo()" id="montoEfectivo" placeholder="ej: 1500">
 
-            <div *ngIf="(FormEfectivo.controls['efectivo'].touched || submitted) && FormEfectivo.get('efectivo')?.hasError('required')" class="text-danger fs-5">
-              Dato Requerido.
-            </div>
-
-            <div *ngIf="(FormEfectivo.controls['efectivo'].touched || submitted) && FormEfectivo.get('efectivo')?.hasError('pattern')" class="text-danger fs-5">
-              Dato Numérico.
-            </div>
-          </form>
-        </div>
+              <div *ngIf="!validarEfectivo()" class="text-danger fs-5">
+                Dato Requerido (monto minimo de 8900).
+              </div>
+          </div>
+        </form>
 
         <!-- Radio button Pago con Tarjeta -->
           <div class="form-check">
@@ -152,14 +152,14 @@
 
               <div>
                 <label class="form-label fs-4">Número <span class="text-danger">*</span></label>
-                <input class="form-control" type="text" formControlName="nroTarjeta" [ngClass]="{'is-invalid': (FormTarjeta.controls['nroTarjeta'].touched || submitted) && FormTarjeta.controls['nroTarjeta'].errors}" placeholder=" ej: 1234567891234567">
+                <input class="form-control" type="text" formControlName="nroTarjeta" [ngClass]="{'is-invalid': (FormTarjeta.controls['nroTarjeta'].touched || submitted) && FormTarjeta.controls['nroTarjeta'].errors}" placeholder=" ej: 4234567891234567">
 
                 <div *ngIf="(FormTarjeta.controls['nroTarjeta'].touched || submitted) && FormTarjeta.get('nroTarjeta')?.hasError('required')" class="text-danger fs-5">
                   Dato Requerido.
                 </div>
 
                 <div *ngIf="(FormTarjeta.controls['nroTarjeta'].touched || submitted) && FormTarjeta.get('nroTarjeta')?.hasError('pattern')" class="text-danger fs-5">
-                  Dato Numérico de 16 dígitos.
+                  Dato Numérico de 16 dígitos - Tarjeta Visa
                 </div>
               </div>
 
@@ -174,7 +174,7 @@
                 </div>
 
                 <div *ngIf="(FormTarjeta.controls['nombreTarjeta'].touched || submitted) && FormTarjeta.get('nombreTarjeta')?.hasError('pattern')" class="text-danger fs-5">
-                  Dato texto, 4 a 50 caracteres.
+                  Dato texto, máximo 100 caracteres.
                 </div>
               </div>
 
@@ -183,14 +183,16 @@
               <div>
                 <label class="form-label fs-4">Vencimiento <span class="text-danger">*</span></label>
 
-                <input class="form-control vencimiento-input" type="text" formControlName="vencimiento" [ngClass]="{'is-invalid': (FormTarjeta.controls['vencimiento'].touched || submitted) && FormTarjeta.controls['vencimiento'].errors}" placeholder="ej: 05/25">
+                <input
+                (change)="obtenertodo()"
+                type="text"
+                placeholder="ej: 10/2024"
+                id="mesFecha"
+                class="form-control"
+                >
 
-                <div *ngIf="(FormTarjeta.controls['vencimiento'].touched || submitted) && FormTarjeta.get('vencimiento')?.hasError('required')" class="text-danger fs-5">
-                  Ingrese Vencimiento Tarjeta.
-                </div>
-
-                <div *ngIf="(FormTarjeta.controls['vencimiento'].touched || submitted) && FormTarjeta.get('vencimiento')?.hasError('pattern')" class="text-danger fs-5">
-                  Ingrese Fecha Sin Vencer en Formato 'MM/AA' (M = mes y A = año).
+                <div *ngIf="showErrorVencimiento" class="text-danger fs-5">
+                  Ingrese Fecha Sin Vencer en Formato 'MM/AAAA' (M = mes y A = año).
                 </div>
 
               </div>
@@ -199,14 +201,14 @@
 
               <div>
                 <label class="form-label fs-4">CVC <span class="text-danger">*</span></label>
-                <input class="form-control" type="text" formControlName="codigo" [ngClass]="{'is-invalid': (FormTarjeta.controls['codigo'].touched || submitted) && FormTarjeta.controls['codigo'].errors}" placeholder="ej: 123 o 1234">
+                <input class="form-control" type="text" formControlName="codigo" [ngClass]="{'is-invalid': (FormTarjeta.controls['codigo'].touched || submitted) && FormTarjeta.controls['codigo'].errors}" placeholder="ej: 123">
 
                 <div *ngIf="(FormTarjeta.controls['codigo'].touched || submitted) && FormTarjeta.get('codigo')?.hasError('required')" class="text-danger fs-5">
                   Dato Requerido.
                 </div>
 
                 <div *ngIf="(FormTarjeta.controls['codigo'].touched || submitted) && FormTarjeta.get('codigo')?.hasError('pattern')" class="text-danger fs-5">
-                  Dato numérico, 3 o 4 caracteres.
+                  Dato numérico, ingrese 3 dígitos.
                 </div>
 
               </div>

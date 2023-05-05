@@ -12,6 +12,9 @@ export class CarritoComprasComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  showProductos: boolean = true;
+
+
   arrayProductos = [
     {
       nombre: "Big Mac",

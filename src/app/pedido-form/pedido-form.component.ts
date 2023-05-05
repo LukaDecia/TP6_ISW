@@ -14,11 +14,12 @@ export class PedidoFormComponent implements OnInit {
   showProgramacion: boolean = false;
   showPagoEfectivo : boolean = false;
   showPagoTarjeta : boolean = false;
+  showErrorVencimiento: boolean = false;
   submitted = false;
 
   // ARRAYS PARA COMBOS
-  horarios = this.crearHorarios('09:00', '12:00');
-  ciudades : string[] = ["Córdoba", "Villa Allende", "Alta Gracia"];
+  horarios = this.crearHorarios('08:00', '23:00');
+  ciudades : string[] = ["Córdoba", "Villa Carlos Paz", "San Francisco"];
 
   //FormRegistro !: FormGroup;
   FormDireccion!: FormGroup;
@@ -45,19 +46,21 @@ export class PedidoFormComponent implements OnInit {
     this.FormDireccion = this.formBuilder.group({
       calle: ['',
                   [Validators.required,
-                  Validators.minLength(4),
-                  Validators.maxLength(50)]],
+                  Validators.minLength(1),
+                  Validators.maxLength(100)]],
       nroCalle: [null,
                 [Validators.required,
-                Validators.pattern('[0-9]{1,5}')]]
+                Validators.pattern('[0-9]{1,5}')]],
+      referencia: ['',
+                [Validators.minLength(1),
+                Validators.maxLength(100)]],
     })
 
     // FORM EFECTIVO
 
     this.FormEfectivo = this.formBuilder.group({
       efectivo: [null,
-        [Validators.required,
-        Validators.pattern('[0-9]+')]]
+        [Validators.required]]
     })
 
     // FORM PROGRAMAR ENVIO
@@ -73,23 +76,19 @@ export class PedidoFormComponent implements OnInit {
     this.FormTarjeta = this.formBuilder.group({
       nroTarjeta: [null,
         [Validators.required,
-        Validators.pattern('[0-9]{16}')]],
+        Validators.pattern('^4[0-9]{15}$')]],
       nombreTarjeta: ['',
               [Validators.required,
-              Validators.pattern('[a-zA-Z]{4,50}')]],
-      vencimiento: ['',
-              [Validators.required,
-              Validators.pattern('(0[1-9]|1[0-2])\/(?!20|21|22)[2-9][0-9](?<!01\/23|02\/23|03\/23|04\/23)')]],
+              Validators.pattern('[a-zA-Z]{1,100}')]],
       codigo: ['',
               [Validators.required,
-              Validators.pattern('[0-9]{3,4}')]],
+              Validators.pattern('[0-9]{3}')]],
     })
 
   }
 
-    //falta validar el efectivo
     confirmarBtnStatus() : boolean{
-      if ((!this.showProgramacion || (this.showProgramacion && this.FormFecha.valid)) && this.FormDireccion.valid && ((this.showPagoEfectivo && this.FormEfectivo.valid) || (this.showPagoTarjeta && this.FormTarjeta.valid))){
+      if ((!this.showProgramacion || (this.showProgramacion && this.FormFecha.valid)) && this.FormDireccion.valid && ((this.showPagoEfectivo && this.validarEfectivo()) || (this.showPagoTarjeta && this.FormTarjeta.valid && this.obtenertodo()))){
         return true
       }
       return false
@@ -107,6 +106,73 @@ export class PedidoFormComponent implements OnInit {
     console.log("Form Tarjeat " + this.FormTarjeta.valid);
 
     this.router.navigate(['/pedidoRealizado']);
+  }
+
+  obtenertodo(){
+    const input = document.getElementById(
+      'mesFecha',
+    ) as HTMLInputElement;
+    const validoformato: number = input.value.length
+    const character: string = '/';
+    const index: number = (input.value).indexOf(character);
+    if (validoformato != 7) {
+      this.showErrorVencimiento = true
+      ;
+    } else {
+      if (index == -1) {
+        this.showErrorVencimiento = true
+        ;
+      }
+      else{
+        var mes: string = (input.value).substring(0, index);
+        var mesN : number = +mes
+        if (mes.length != 2){
+          this.showErrorVencimiento = true
+          ;
+        }
+        else{
+          if (mesN < 1 || mesN > 12){
+            this.showErrorVencimiento = true
+            ;
+          }
+          else{
+            var year: string = (input.value).slice((input.value).indexOf('/') + 1);
+            var yearN : number = +year
+            if (yearN < 2023 || yearN > 9999){
+              this.showErrorVencimiento = true
+            }
+            else{
+              if (yearN == 2023 && mesN < 5) {
+                this.showErrorVencimiento = true
+              } else {
+                this.showErrorVencimiento = false
+              }
+            }
+          }
+        }
+      }
+    }
+    return this.showErrorVencimiento
+    console.log(this.showErrorVencimiento)
+
+  }
+
+  validarEfectivo(){
+    const input = document.getElementById(
+      'montoEfectivo',
+    ) as HTMLInputElement;
+
+    const monto: string = input.value;
+    var montoValidar : number = +monto
+    if (montoValidar < 8900) return false
+    return true
+  }
+
+  displayM(){
+    const input = document.getElementById(
+      'mesFecha',
+    ) as HTMLInputElement;
+    const aux = input.value
   }
 
   crearHorarios(horaInicio:string, horaFin:string) {

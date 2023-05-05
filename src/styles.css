@@ -5,29 +5,30 @@
 
 :root {
     /* Palette */
-    --primary-solid:#D90429;
-    --primary-900: rgba(217, 4, 41, .9);;
-    --primary-500: rgba(217, 4, 41, .5);;
-    --primary-300: rgba(217, 4, 41, .3);;
+    --primary-solid:#F95738;
+    --primary-900: rgba(249, 87, 56, .9);
+    --primary-500: rgba(249, 87, 56, .5);
+    --primary-300: rgba(249, 87, 56, .3);
 
-    --secondary-solid: #EF233C;
-    --secondary-900: rgba(239, 35, 60, .9);
-    --secondary-500: rgba(239, 35, 60, .5);
-    --secondary-300: rgba(239, 35, 60, .3);
+    --secondary-solid: #EE964B;
+    --secondary-900: rgba(238, 150, 75, .9);
+    --secondary-500: rgba(238, 150, 75, .5);
+    --secondary-300: rgba(238, 150, 75, .3);
 
-    --gray-solid: #8D99AE;
-    --gray-900: rgba(141, 153, 174, .9);
-    --gray-500: rgba(141, 153, 174, .5);
-    --gray-300: rgba(141, 153, 174, .3);
+    --yellow-solid: #F4D35E;
+    --yellow-900: rgba(244, 211, 94, .9);
+    --yellow-500: rgba(244, 211, 94, .5);
+    --yellow-300: rgba(244, 211, 94, .3);
 
     --dark-solid: #1f1f1f;
     --dark-900: rgb(31, 31, 31, .9);
     --dark-500: rgb(31, 31, 31, .5);
     --dark-300: rgb(31, 31, 31, .3);
 
-    --dark-bg-solid: #2B2D42;
+    --dark-bg-solid: #0D3B66;
     --light-bg-solid: #EDF2F4;
 
+    --bg-color: #FAF0CA;
     --light-font-solid: #FFFFFF;
 
 
@@ -68,7 +69,11 @@ html {
     font-family: var(--base-font);
     font-size: 62.5%; /* Esto me hace que un em = 10px */
     color: var(--dark-solid);
-    background-color: var(--light-bg-solid);
+    background-color: var(--bg-color);
+}
+
+body {
+  background-color: var(--bg-color);
 }
 
 a {
